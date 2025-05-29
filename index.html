@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tithes Series</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="quiz.css" />
+
+        <style>
+            /* Professional Engaging Spinner */
+            .tab-spinner {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150px;
+                width: 100%;
+                position: relative;
+            }
+
+            /* Hide the original Font Awesome icon */
+            .tab-spinner i {
+                display: none;
+            }
+
+            /* Main spinner ring */
+            .tab-spinner::before {
+                content: "";
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: 3px solid rgba(74, 109, 167, 0.1);
+                border-top: 3px solid #4a6da7;
+                border-right: 3px solid #4a6da7;
+                box-shadow: 0 0 15px rgba(74, 109, 167, 0.1);
+                animation: spinClockwise 1.2s
+                    cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            }
+
+            /* Inner spinner ring */
+            .tab-spinner::after {
+                content: "";
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 3px solid rgba(74, 109, 167, 0.05);
+                border-bottom: 3px solid #4a6da7;
+                border-left: 3px solid #4a6da7;
+                animation: spinCounterClockwise 1.8s
+                    cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            }
+
+            /* Create the pulse effect */
+            @keyframes spinClockwise {
+                0% {
+                    transform: rotate(0deg) scale(1);
+                }
+                50% {
+                    transform: rotate(180deg) scale(1.1);
+                    border-top-color: #5b7fbf;
+                    border-right-color: #5b7fbf;
+                    box-shadow: 0 0 20px rgba(74, 109, 167, 0.4);
+                }
+                100% {
+                    transform: rotate(360deg) scale(1);
+                }
+            }
+
+            @keyframes spinCounterClockwise {
+                0% {
+                    transform: rotate(0deg) scale(1);
+                }
+                50% {
+                    transform: rotate(-180deg) scale(1.15);
+                    border-bottom-color: #5b7fbf;
+                    border-left-color: #5b7fbf;
+                }
+                100% {
+                    transform: rotate(-360deg) scale(1);
+                }
+            }
+
+            /* Add a subtle pulsating dot in the center */
+            .tab-spinner .center-dot {
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                background-color: #4a6da7;
+                border-radius: 50%;
+                animation: pulseDot 1.5s ease-in-out infinite;
+            }
+
+            @keyframes pulseDot {
+                0%,
+                100% {
+                    transform: scale(0.7);
+                    opacity: 0.5;
+                }
+                50% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                    box-shadow: 0 0 10px rgba(74, 109, 167, 0.6);
+                }
+            }
+
+            /* Keep your existing fade transition */
+            .tab-content {
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            .tab-content.active {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Loading Screen -->
+        <div class="loader-container">
+            <div class="loader-logo">
+                <img src="./logo.png" alt="Sunday School Logo" />
+                <div class="pulse"></div>
+            </div>
+            <div class="ministry-name">Life Gate Ministries Worldwide</div>
+            <div class="loader-text">Loading Sunday School Lesson</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="inner-logo-container">
+            <img src="./logo.png" alt="Sunday School Logo" class="logo" />
+        </div>
+
+        <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            aria-label="Toggle theme"
+            style="z-index: 99999"
+        >
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="container">
+            <h1>Sunday School Lesson</h1>
+            <h2>Date: <span>June 1, 2025</span></h2>
+            <h2>Tithes Part 2</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="lessonProgress"></div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('intro')">
+                    Introduction
+                </button>
+                <button class="tab-btn" onclick="openTab('lesson')">
+                    Lesson
+                </button>
+
+                <button class="tab-btn" onclick="openTab('conclusion')">
+                    Conclusion
+                </button>
+                <button class="tab-btn" onclick="openTab('application')">
+                    Application
+                </button>
+
+                <button class="tab-btn" onclick="openTab('quiz')">Quiz</button>
+                <button class="tab-btn" onclick="openTab('prayer')">
+                    Prayer Points
+                </button>
+            </div>
+
+            <div id="tab-spinner" class="tab-spinner" style="display: none">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="intro" class="tab-content active">
+                <div class="memory-verse">
+                    <h2>🧠📝 Memory Verse</h2>
+                    <blockquote>
+                        "Be not deceived; God is not mocked: for whatsoever a
+                        man soweth, that shall he also reap." - Galatians. 6:7
+                        🌱➡️🌾✝️⚠️
+                        <br />
+                        <button
+                            onclick="showBibleVersions('Galatians 6:7')"
+                            class="verse-btn"
+                        >
+                            Read in Different Versions
+                        </button>
+                    </blockquote>
+                </div>
+                <h2>Text: Hebrews 7:1-8</h2>
+                <blockquote>
+                    <button
+                        onclick="showBibleVersions('Hebrews 7:1-8')"
+                        class="verse-btn"
+                    >
+                        Read in Different Versions
+                    </button>
+                </blockquote>
+
+                <h2>Introduction 🧠✨📖</h2>
+                <p>
+                    The controversy and dissatisfaction rising severally from
+                    the issue of tithing are all resulting from insufficient
+                    knowledge of history. Although some of it could be
+                    attributed to selfishness, a greater degree is to the
+                    latter. 🤔⚡️
+                </p>
+                <p>
+                    Tithing is one of the kingdom's oldest revenue generating
+                    sources that is not dispensational. 💰👑⏳
+                </p>
+
+                <div class="aims-objectives">
+                    <h3>Aims and Objectives 🎯📖💡</h3>
+                    <p>
+                        <strong>Aim:</strong> To knockout the wrong ideas
+                        already in the minds of God's people and plant the
+                        truth. 🧠✝️⚔️
+                    </p>
+                    <p>
+                        <strong>Objective:</strong> That every child of God
+                        becomes a tithe payer the biblically approved way for
+                        the promised unfailing divine results. 🙏💰🌱
+                    </p>
+                </div>
+            </div>
+
+            <div id="lesson" class="tab-content">
+                <h2>Text Review/Lesson 📚✨</h2>
+                <div class="main-text">
+                    <h3>Text: Hebrews 7:1-8 🕊️</h3>
+                    <button
+                        onclick="showBibleVersions('Hebrews 7:1-8')"
+                        class="verse-btn"
+                    >
+                        📖 Read Hebrews 7:1-8
+                    </button>
+                </div>
+
+                <div class="lesson-section">
+                    <h3>Lesson 🧠💡</h3>
+                    <p>
+                        Our text reveals the ancient and divine history of
+                        tithing, dating back to Melchizedek and Abraham. It
+                        predates the Mosaic Law, continues through the New
+                        Testament, and remains eternal as long as there is a
+                        Priest. Christ, our eternal High Priest in the order of
+                        Melchizedek, guides this truth (Hebrews 5:6). Let us
+                        explore the different periods when tithing has been
+                        practiced.
+                    </p>
+
+                    <button
+                        onclick="showBibleVersions('Hebrews 5:6')"
+                        class="verse-btn"
+                    >
+                        ✝️ Read Hebrews 5:6
+                    </button>
+
+                    <ol class="scripture-list">
+                        <li>
+                            <h3>
+                                TITHING BEFORE THE LAW OF MOSES ⏳📜 (Hebrews
+                                7:1-4)
+                            </h3>
+                            <p>
+                                The earliest biblical record is in Genesis
+                                14:20, roughly 430 years before Moses' Law.
+                                Genesis 28:22 further confirms that tithing
+                                existed long before the Law of Moses.
+                            </p>
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Hebrews 7:1-4')"
+                                    class="verse-btn"
+                                >
+                                    📖 Hebrews 7:1-4
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Genesis 14:20')"
+                                    class="verse-btn"
+                                >
+                                    📖 Genesis 14:20
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Genesis 28:22')"
+                                    class="verse-btn"
+                                >
+                                    📖 Genesis 28:22
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <h3>
+                                TITHING UNDER THE LAW OF MOSES ⚖️🔥 (Hebrews
+                                7:5)
+                            </h3>
+                            <p>
+                                Tithing was incorporated into Mosaic Law but did
+                                not originate there. Because of this, tithing
+                                continues even though the Mosaic Law is no
+                                longer in effect.
+                            </p>
+                            <p>
+                                See Leviticus 27:30 and Malachi 3:10 for further
+                                guidance. Aaron and his descendants received
+                                tithes from the people.
+                            </p>
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Hebrews 7:5')"
+                                    class="verse-btn"
+                                >
+                                    📖 Hebrews 7:5
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Leviticus 27:30')"
+                                    class="verse-btn"
+                                >
+                                    📖 Leviticus 27:30
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Malachi 3:10')"
+                                    class="verse-btn"
+                                >
+                                    📖 Malachi 3:10
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <h3>
+                                TITHING IN THE NEW TESTAMENT ✝️💒 (Hebrews
+                                7:6-8)
+                            </h3>
+                            <p>
+                                Tithing remains valid today in the New Testament
+                                era. Believers, as spiritual descendants of
+                                Aaron, support the priesthood in the order of
+                                Melchizedek.
+                            </p>
+                            <p>
+                                Jesus taught about tithing during His ministry
+                                (Matthew 23:23; Luke 18:9-12), and Paul
+                                reaffirmed Abraham’s children’s obligation to
+                                support the Melchizedek priesthood (Hebrews
+                                7:9-10).
+                            </p>
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Hebrews 7:6-8')"
+                                    class="verse-btn"
+                                >
+                                    📖 Hebrews 7:6-8
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Matthew 23:23')"
+                                    class="verse-btn"
+                                >
+                                    📖 Matthew 23:23
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Luke 18:9-12')"
+                                    class="verse-btn"
+                                >
+                                    📖 Luke 18:9-12
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Hebrews 7:9-10')"
+                                    class="verse-btn"
+                                >
+                                    📖 Hebrews 7:9-10
+                                </button>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div id="application" class="tab-content">
+                <h2>🙏 Personal Application – Tithes Part 1</h2>
+                <div class="reflection-section">
+                    <div class="interactive-cards">
+                        <!-- Obedience Check -->
+                        <div class="reflection-card">
+                            <h3>📊 Tithing Obedience Check</h3>
+                            <div class="love-meter">
+                                <p>
+                                    How faithful were you in giving your tithe
+                                    this week?
+                                </p>
+                                <div class="rating-container">
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="10"
+                                        value="5"
+                                        class="love-slider"
+                                        id="titheRating"
+                                    />
+                                    <span class="rating-value">5/10</span>
+                                </div>
+                                <div class="rating-feedback"></div>
+                            </div>
+                        </div>
+
+                        <!-- Action Plan -->
+                        <div class="reflection-card">
+                            <h3>📝 Tithing Action Plan</h3>
+                            <div class="action-items">
+                                <div class="action-item">
+                                    <input type="checkbox" id="action1" />
+                                    <label for="action1">
+                                        💰 Set aside 10% of all income for God.
+                                    </label>
+                                </div>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action2" />
+                                    <label for="action2">
+                                        🏛️ Pay tithe to the rightful storehouse
+                                        (local church).
+                                    </label>
+                                </div>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action3" />
+                                    <label for="action3">
+                                        🤝 Encourage someone to honor God with
+                                        their substance.
+                                    </label>
+                                </div>
+                                <button class="add-action-btn">
+                                    ➕ Add Custom Action
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reflection Journal -->
+                    <div class="reflection-journal">
+                        <h3>📔 Reflection Journal</h3>
+                        <div class="journal-prompts">
+                            <div class="prompt active">
+                                <p>
+                                    💭 How have you honored the Lord with your
+                                    substance this week?
+                                </p>
+                                <textarea
+                                    class="reflection-input"
+                                    placeholder="Write your thoughts here..."
+                                ></textarea>
+                            </div>
+                            <div class="prompt-nav">
+                                <button class="prev-prompt" disabled>
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <span class="prompt-counter">1/3</span>
+                                <button class="next-prompt">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commitment Section -->
+                    <div class="commitment-section">
+                        <h3>🤲 Tithing Commitment</h3>
+                        <div class="commitment-form">
+                            <p>I commit to honoring God with:</p>
+                            <input
+                                type="text"
+                                class="commitment-input"
+                                placeholder="e.g., All my income from this month..."
+                            />
+                            <button class="save-commitment">
+                                📌 Make Commitment
+                            </button>
+                        </div>
+                        <div class="saved-commitments">
+                            <h4>📅 Previous Commitments</h4>
+                            <ul class="commitment-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conclusion" class="tab-content">
+                <h2>Conclusion 📜</h2>
+                <p>
+                    <span onclick="showBibleVersions('tithing_relevance')"
+                        >Tithing</span
+                    >
+                    <span
+                        onclick="showBibleVersions('melchizedek_significance')"
+                        >precedes</span
+                    >
+                    both Testaments as revealed above. Those who neglect it
+                    because they thought it is an Old Testament issue have no
+                    excuses. 📖 The fact that Abraham displays neither
+                    strangeness nor the show of starting a new doctrine in his
+                    giving suggests to me that it was an already known practice
+                    with no beginning traceable from Biblical spanrecords. ⛪
+                </p>
+            </div>
+
+            <link rel="stylesheet" href="theme.css" />
+            <div id="quiz" class="tab-content">
+                <h2>📚 Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div id="quiz-questions">
+                        <div class="question green">
+                            <p class="green">
+                                1. What is the memory verse for this lesson?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input
+                                        class="green"
+                                        type="radio"
+                                        name="q1"
+                                        value="a"
+                                    />
+                                    Galatians 6:7</label
+                                >
+                                <label
+                                    ><input
+                                        class="green"
+                                        type="radio"
+                                        name="q1"
+                                        value="b"
+                                    />
+                                    Hebrews 7:1-8</label
+                                >
+                                <label
+                                    ><input
+                                        class="green"
+                                        type="radio"
+                                        name="q1"
+                                        value="c"
+                                    />
+                                    Malachi 3:10</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p class="green">
+                                2. When does the history of tithing date back
+                                to?
+                            </p>
+                            <div class="options green">
+                                <label
+                                    ><input type="radio" name="q2" value="a" />
+                                    Time of Moses</label
+                                >
+                                <label
+                                    ><input type="radio" name="q2" value="b" />
+                                    Time of Melchizedek and Abraham</label
+                                >
+                                <label
+                                    ><input type="radio" name="q2" value="c" />
+                                    Time of the New Testament only</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question green">
+                            <p class="green">
+                                3. According to the lesson, is tithing only a
+                                practice under the Law of Moses?
+                            </p>
+                            <div class="options green">
+                                <label
+                                    ><input type="radio" name="q3" value="a" />
+                                    Yes, it began with the Law of Moses</label
+                                >
+                                <label
+                                    ><input type="radio" name="q3" value="b" />
+                                    No, it predates the Law of Moses</label
+                                >
+                                <label
+                                    ><input type="radio" name="q3" value="c" />
+                                    It began in the New Testament</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question green">
+                            <p class="green">
+                                4. Who is the priest in the order of Melchizedek
+                                mentioned in the New Testament?
+                            </p>
+                            <div class="options green">
+                                <label
+                                    ><input type="radio" name="q4" value="a" />
+                                    Aaron</label
+                                >
+                                <label
+                                    ><input type="radio" name="q4" value="b" />
+                                    Moses</label
+                                >
+                                <label
+                                    ><input type="radio" name="q4" value="c" />
+                                    Christ</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question green">
+                            <p class="green">
+                                5. What scripture shows that tithing is legal in
+                                the New Testament?
+                            </p>
+                            <div class="options green">
+                                <label
+                                    ><input type="radio" name="q5" value="a" />
+                                    Hebrews 7:6-8</label
+                                >
+                                <label
+                                    ><input type="radio" name="q5" value="b" />
+                                    Genesis 14:20</label
+                                >
+                                <label
+                                    ><input type="radio" name="q5" value="c" />
+                                    Leviticus 27:30</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question green">
+                            <p class="green">
+                                6. What is the purpose of tithing according to
+                                Paul's teaching?
+                            </p>
+                            <div class="options green">
+                                <label
+                                    ><input type="radio" name="q6" value="a" />
+                                    To support Melchizedek's priesthood</label
+                                >
+                                <label
+                                    ><input type="radio" name="q6" value="b" />
+                                    To entertain the church</label
+                                >
+                                <label
+                                    ><input type="radio" name="q6" value="c" />
+                                    To fund worldly programs</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="checkQuiz()" class="quiz-submit">
+                    📝 Submit Answers
+                </button>
+                <div id="quiz-results" style="background-color: green">
+                    you score
+                </div>
+            </div>
+
+            <link rel="stylesheet" href="prayer.css" />
+
+            <div id="prayer" class="tab-content">
+                <h2>Prayer Points</h2>
+
+                <div class="prayer-section">
+                    <div class="prayer-points">
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Heavenly Father, I thank You for revealing the
+                                truth about tithing through Your Word and the
+                                faithful examples of Abraham, Jacob, and others
+                                who honored You with their firstfruits.
+                            </div>
+                            <div class="scripture-ref">
+                                Genesis 14:20; 28:22
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord Jesus, deliver me from ignorance and false
+                                teachings about tithing. Illuminate my heart
+                                with Your truth and help me discern Your Word
+                                correctly regarding stewardship and giving.
+                            </div>
+                            <div class="scripture-ref">
+                                2 Timothy 2:15; John 8:32
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Holy Spirit, uproot every form of selfishness,
+                                greed, and fear that hinders my obedience in
+                                tithing and generous giving. Create in me a
+                                clean heart that delights in honoring God.
+                            </div>
+                            <div class="scripture-ref">
+                                Psalm 51:10; 2 Corinthians 9:7
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Father, give me a heart that rejoices in
+                                honoring You with my tithes and offerings,
+                                viewing them not as burdens but as covenant
+                                privileges and acts of worship.
+                            </div>
+                            <div class="scripture-ref">
+                                Proverbs 3:9-10; Hebrews 7:8
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                God Almighty, establish me as a faithful and
+                                consistent tither in the order of Melchizedek,
+                                in complete obedience to Christ Jesus, my
+                                eternal High Priest and Lord.
+                            </div>
+                            <div class="scripture-ref">
+                                Hebrews 7:1-10; Psalm 110:4
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prayer-section">
+                    <h2 class="section-title">
+                        Prayers for Ministry and Impact
+                    </h2>
+                    <div class="prayer-points">
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord, anoint me to be a vessel of truth,
+                                teaching and sharing the biblical principles of
+                                tithing with others in love, wisdom, and
+                                clarity, never in condemnation but in grace.
+                            </div>
+                            <div class="scripture-ref">
+                                2 Timothy 2:24-25; Ephesians 4:15
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Father, by Your mighty power, destroy every
+                                false doctrine and misconception that causes
+                                Your people to doubt, neglect, or misunderstand
+                                the principle of biblical stewardship.
+                            </div>
+                            <div class="scripture-ref">
+                                2 Corinthians 10:4-5; Ephesians 6:12
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prayer-section">
+                    <h2 class="section-title">
+                        Prayers for Blessing and Breakthrough
+                    </h2>
+                    <div class="prayer-points">
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                O Lord, as I faithfully obey Your Word in
+                                tithing, let the promises of Malachi 3:10-12 be
+                                fulfilled in my life — open the windows of
+                                heaven, pour out blessings I cannot contain, and
+                                rebuke the devourer for my sake.
+                            </div>
+                            <div class="scripture-ref">Malachi 3:10-12</div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Help me, Lord, to mature in my walk with You and
+                                grow in understanding all kingdom principles,
+                                including giving, stewardship, and the generous
+                                heart that reflects Your character.
+                            </div>
+                            <div class="scripture-ref">
+                                2 Peter 3:18; Luke 6:38
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord, I covenant to honor You with my tithes,
+                                offerings, and firstfruits. Establish me firmly
+                                in Your divine financial system for kingdom
+                                advancement, personal provision, and
+                                generational blessing.
+                            </div>
+                            <div class="scripture-ref">
+                                Deuteronomy 8:18; 3 John 1:2
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Father, let my faithfulness in tithing be a
+                                testimony of Your goodness and provision. Use my
+                                obedience to inspire others and bring glory to
+                                Your name throughout the earth.
+                            </div>
+                            <div class="scripture-ref">
+                                Matthew 5:16; Philippians 4:19
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add this modal for Bible versions -->
+            <div id="verse-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="verse-reference"></h2>
+                    <div class="version-tab">
+                        <button
+                            class="version-btn active"
+                            onclick="showVersion('KJV')"
+                        >
+                            KJV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NKJV')"
+                        >
+                            NKJV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NIV')"
+                        >
+                            NIV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('ESV')"
+                        >
+                            ESV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('AMP')"
+                        >
+                            AMP
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NLT')"
+                        >
+                            NLT
+                        </button>
+                    </div>
+                    <div id="verse-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Replace your existing font controls with this -->
+        <div class="font-controls">
+            <button
+                onclick="adjustFontSize(-1)"
+                aria-label="Decrease font size"
+            >
+                <i class="fas fa-minus"></i>
+            </button>
+            <span class="font-size">16px</span>
+            <button onclick="adjustFontSize(1)" aria-label="Increase font size">
+                <i class="fas fa-plus"></i>
+            </button>
+            <select
+                class="font-family-select"
+                onchange="changeFont(this.value)"
+            >
+                <option value="'Segoe UI', sans-serif">Default</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="'Times New Roman', serif">
+                    Times New Roman
+                </option>
+                <option value="'Comic Sans MS', cursive">Comic Sans</option>
+            </select>
+        </div>
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            $(function () {
+                let tab = $("tab");
+                tab.click(function () {
+                    alert;
+                });
+            });
+        </script>
+
+        <script>
+            // Loading Screen
+            window.addEventListener("load", function () {
+                setTimeout(() => {
+                    document.querySelector(".loader-container").style.display =
+                        "none";
+                }, 2000);
+            });
+
+            // // Tab Functionality
+            function openTab(tabName) {
+                const tabContents =
+                    document.getElementsByClassName("tab-content");
+                const tabButtons = document.getElementsByClassName("tab-btn");
+                const spinner = document.getElementById("tab-spinner");
+
+                for (let content of tabContents) {
+                    content.classList.remove("active");
+                    content.style.display = "none";
+                }
+
+                for (let button of tabButtons) {
+                    button.classList.remove("active");
+                }
+
+                document.getElementById(tabName).classList.add("active");
+                event.currentTarget.classList.add("active");
+
+                spinner.style.display = "flex";
+
+                setTimeout(() => {
+                    // Hide spinner
+                    spinner.style.display = "none";
+
+                    // Show selected tab content
+                    const selectedTab = document.getElementById(tabName);
+                    selectedTab.style.display = "block";
+
+                    // Trigger a reflow before adding the active class for animation
+                    void selectedTab.offsetWidth;
+
+                    // Add active class to fade in the content
+                    selectedTab.classList.add("active");
+
+                    // Update progress if needed
+                    updateProgress();
+                }, 800); // Adjust loading time as needed (800ms)
+            }
+
+            // Theme Toggle
+
+            function toggleTheme() {
+                document.body.classList.toggle("dark-mode");
+                const icon = document.querySelector(".theme-toggle i");
+                icon.classList.toggle("fa-moon");
+                icon.classList.toggle("fa-sun");
+            }
+
+            // Add these functions to your existing JavaScript
+
+            function showBibleVersions(reference) {
+                const modal = document.getElementById("verse-modal");
+                const verseRef = document.getElementById("verse-reference");
+                verseRef.textContent = reference;
+                modal.style.display = "block";
+                document.body.classList.add("modal-open");
+                showVersion(preferredVersion);
+            }
+
+            // function showBibleVersions(reference) {
+            //     const modal = document.getElementById("verse-modal");
+            //     const verseRef = document.getElementById("verse-reference");
+            //     const contentArea = document.getElementById("verse-content");
+
+            //     verseRef.textContent = reference;
+            //     modal.style.display = "block";
+            //     document.body.classList.add("modal-open");
+
+            //     const data = bibleVerses[reference];
+            //     if (!data) {
+            //         contentArea.innerHTML =
+            //             "<p>Content not found for this reference.</p>";
+            //         return;
+            //     }
+
+            //     let html = "";
+
+            //     // Check if it's Melchizedek-style multi-point topic
+            //     if (reference === "melchizedek_significance") {
+            //         for (const topic in data) {
+            //             html += `<h4>${topic}</h4><ul>`;
+            //             data[topic].forEach((point) => {
+            //                 html += `<li>${point}</li>`;
+            //             });
+            //             html += `</ul>`;
+            //         }
+            //     } else {
+            //         // Otherwise, treat as versioned Bible text
+            //         const preferredVersion = "KJV"; // or make this dynamic if needed
+            //         if (data[preferredVersion]) {
+            //             html = `<p><strong>${preferredVersion}:</strong> ${data[preferredVersion]}</p>`;
+            //         } else {
+            //             html = `<p>${preferredVersion} version not found.</p>`;
+            //         }
+            //     }
+
+            //     contentArea.innerHTML = html;
+            // }
+
+            const bibleVerses = {
+                tithing_relevance: {
+                    KJV:
+                        "<strong>Tithing Relevance:</strong> Tithing is a biblical principle that predates the Law of Moses and continues to be relevant today.<br><br>" +
+                        "<strong>Acknowledgment of Spiritual Authority:</strong> Melchizedek was a priest of the true God, representing God Most High (El Elyon). Abraham honored Melchizedek’s priestly role by giving him a tithe — a recognition of God’s provision and blessing.<br><br>" +
+                        "<strong>Recognition of God’s Sovereignty:</strong> By giving a tithe, Abraham showed humility and submission to the one who represents God’s kingdom. It was an act of worship and gratitude to God, through His priest.<br><br>" +
+                        "<strong>Sign of Blessing and Covenant:</strong> The tithe symbolized that Abraham acknowledged Melchizedek’s blessing was from God. It also confirmed a covenant relationship with God beyond Abraham’s immediate family line.<br><br>" +
+                        "<strong>Spiritual Precedence Over Abraham:</strong> Later, in Hebrews 7, Melchizedek is shown as greater than Abraham, because Abraham gave him a tithe. It means Melchizedek’s priesthood is superior and eternal, unlike the later Levitical priesthood descending from Abraham.",
+                    NKJV:
+                        "<strong>Tithing Relevance:</strong> Tithing is a biblical principle that predates the Law of Moses and continues to be relevant today.<br><br>" +
+                        "<strong>Acknowledgment of Spiritual Authority:</strong> Melchizedek was a priest of the true God, representing God Most High (El Elyon). Abraham honored Melchizedek’s priestly role by giving him a tithe — a recognition of God’s provision and blessing.<br><br>" +
+                        "<strong>Recognition of God’s Sovereignty:</strong> By giving a tithe, Abraham showed humility and submission to the one who represents God’s kingdom. It was an act of worship and gratitude to God, through His priest.<br><br>" +
+                        "<strong>Sign of Blessing and Covenant:</strong> The tithe symbolized that Abraham acknowledged Melchizedek’s blessing was from God. It also confirmed a covenant relationship with God beyond Abraham’s immediate family line.<br><br>" +
+                        "<strong>Spiritual Precedence Over Abraham:</strong> Later, in Hebrews 7, Melchizedek is shown as greater than Abraham, because Abraham gave him a tithe. It means Melchizedek’s priesthood is superior and eternal, unlike the later Levitical priesthood descending from Abraham.",
+                    NIV:
+                        "<strong>Tithing Relevance:</strong> Tithing is a biblical principle that predates the Law of Moses and continues to be relevant today.<br><br>" +
+                        "<strong>Acknowledgment of Spiritual Authority:</strong> Melchizedek was a priest of the true God, representing God Most High (El Elyon). Abraham honored Melchizedek’s priestly role by giving him a tithe — a recognition of God’s provision and blessing.<br><br>" +
+                        "<strong>Recognition of God’s Sovereignty:</strong> By giving a tithe, Abraham showed humility and submission to the one who represents God’s kingdom. It was an act of worship and gratitude to God, through His priest.<br><br>" +
+                        "<strong>Sign of Blessing and Covenant:</strong> The tithe symbolized that Abraham acknowledged Melchizedek’s blessing was from God. It also confirmed a covenant relationship with God beyond Abraham’s immediate family line.<br><br>" +
+                        "<strong>Spiritual Precedence Over Abraham:</strong> Later, in Hebrews 7, Melchizedek is shown as greater than Abraham, because Abraham gave him a tithe. It means Melchizedek’s priesthood is superior and eternal, unlike the later Levitical priesthood descending from Abraham.",
+                    ESV: "Tithing is a biblical principle that predates the Law of Moses and continues to be relevant today. Melchizedek was a priest of the true God, representing God Most High (El Elyon). Abraham honored Melchizedek’s priestly role by giving him a tithe — a recognition of God’s provision and blessing. By giving a tithe, Abraham showed humility and submission to the one who represents God’s kingdom. It was an act of worship and gratitude to God, through His priest. The tithe symbolized that Abraham acknowledged Melchizedek’s blessing was from God. It also confirmed a covenant relationship with God beyond Abraham’s immediate family line. Later, in Hebrews 7, Melchizedek is shown as greater than Abraham, because Abraham gave him a tithe. It means Melchizedek’s priesthood is superior and eternal, unlike the later Levitical priesthood descending from Abraham.",
+                    AMP:
+                        "<strong>Tithing Relevance:</strong> Tithing is a biblical principle that predates the Law of Moses and continues to be relevant today.<br><br>" +
+                        "<strong>Acknowledgment of Spiritual Authority:</strong> Melchizedek was a priest of the true God, representing God Most High (El Elyon). Abraham honored Melchizedek’s priestly role by giving him a tithe — a recognition of God’s provision and blessing.<br><br>" +
+                        "<strong>Recognition of God’s Sovereignty:</strong> By giving a tithe, Abraham showed humility and submission to the one who represents God’s kingdom. It was an act of worship and gratitude to God, through His priest.<br><br>" +
+                        "<strong>Sign of Blessing and Covenant:</strong> The tithe symbolized that Abraham acknowledged Melchizedek’s blessing was from God. It also confirmed a covenant relationship with God beyond Abraham’s immediate family line.<br><br>" +
+                        "<strong>Spiritual Precedence Over Abraham:</strong> Later, in Hebrews 7, Melchizedek is shown as greater than Abraham, because Abraham gave him a tithe. It means Melchizedek’s priesthood is superior and eternal, unlike the later Levitical priesthood descending from Abraham.",
+                    NLT:
+                        "<strong>Tithing Relevance:</strong> Tithing is a biblical principle that predates the Law of Moses and continues to be relevant today.<br><br>" +
+                        "<strong>Acknowledgment of Spiritual Authority:</strong> Melchizedek was a priest of the true God, representing God Most High (El Elyon). Abraham honored Melchizedek’s priestly role by giving him a tithe — a recognition of God’s provision and blessing.<br><br>" +
+                        "<strong>Recognition of God’s Sovereignty:</strong> By giving a tithe, Abraham showed humility and submission to the one who represents God’s kingdom. It was an act of worship and gratitude to God, through His priest.<br><br>" +
+                        "<strong>Sign of Blessing and Covenant:</strong> The tithe symbolized that Abraham acknowledged Melchizedek’s blessing was from God. It also confirmed a covenant relationship with God beyond Abraham’s immediate family line.<br><br>" +
+                        "<strong>Spiritual Precedence Over Abraham:</strong> Later, in Hebrews 7, Melchizedek is shown as greater than Abraham, because Abraham gave him a tithe. It means Melchizedek’s priesthood is superior and eternal, unlike the later Levitical priesthood descending from Abraham.",
+                },
+
+                "Galatians 6:7": {
+                    KJV: "Be not deceived; God is not mocked: for whatsoever a man soweth, that shall he also reap.",
+                    NKJV: "Do not be deceived, God is not mocked; for whatever a man sows, that he will also reap.",
+                    NIV: "Do not be deceived: God cannot be mocked. A man reaps what he sows.",
+                    ESV: "Do not be deceived: God is not mocked, for whatever one sows, that will he also reap.",
+                    AMP: "Do not be deceived, God is not mocked; for whatever a man sows, that and that only will he also reap.",
+                    NLT: "Don’t be misled—you cannot mock the justice of God. You will always harvest what you plant.",
+                },
+
+                "Hebrews 5:6": {
+                    KJV: "As he saith also in another place, Thou art a priest for ever after the order of Melchisedec.",
+                    NKJV: "As He also says in another place: “You are a priest forever according to the order of Melchizedek”;",
+                    NIV: "And he says in another place, “You are a priest forever, in the order of Melchizedek.”",
+                    ESV: "As he says also in another place, “You are a priest forever, after the order of Melchizedek.”",
+                    AMP: "Just as He says also in another place, “You, Christ, are a priest forever according to the order of Melchizedek.”",
+                    NLT: "And in another passage God said to him, “You are a priest forever in the order of Melchizedek.”",
+                },
+
+                "Hebrews 7:1-8": {
+                    KJV: `1 For this Melchisedec, king of Salem, priest of the most high God, who met Abraham returning from the slaughter of the kings, and blessed him;
+            2 To whom also Abraham gave a tenth part of all; first being by interpretation King of righteousness, and after that also King of Salem, which is, King of peace;
+            3 Without father, without mother, without descent, having neither beginning of days, nor end of life; but made like unto the Son of God; abideth a priest continually.
+            4 Now consider how great this man was, unto whom even the patriarch Abraham gave the tenth of the spoils.
+            5 And verily they that are of the sons of Levi, who receive the office of the priesthood, have a commandment to take tithes of the people according to the law, that is, of their brethren, though they come out of the loins of Abraham:
+            6 But he whose descent is not counted from them received tithes of Abraham, and blessed him that had the promises.
+            7 And without all contradiction the less is blessed of the better.
+            8 And here men that die receive tithes; but there he receiveth them, of whom it is witnessed that he liveth.`,
+
+                    NKJV: `1 For this Melchizedek, king of Salem, priest of the Most High God, who met Abraham returning from the slaughter of the kings and blessed him,
+            2 to whom also Abraham gave a tenth part of all, first being translated “King of Righteousness,” and then also king of Salem, meaning “King of Peace,”
+            3 without father, without mother, without genealogy, having neither beginning of days nor end of life, but made like the Son of God, remains a priest continually.
+            4 Now consider how great this man was, to whom even the patriarch Abraham gave a tenth of the spoils.
+            5 And those indeed of the sons of Levi who receive the priesthood have a commandment to receive tithes according to the law, that is, from their brethren, though they have come from the loins of Abraham.
+            6 But the one whose genealogy is not traced from them received tithes from Abraham and blessed him who had the promises.
+            7 Now beyond all contradiction the lesser is blessed by the better.
+            8 Here mortal men receive tithes, but there he receives them, of whom it is witnessed that he lives.`,
+
+                    NIV: `1 This Melchizedek was king of Salem and priest of God Most High. He met Abraham returning from the defeat of the kings and blessed him,
+            2 and Abraham gave him a tenth of everything. First, the name Melchizedek means “king of righteousness”; then also, “king of Salem” means “king of peace.”
+            3 Without father or mother, without genealogy, without beginning of days or end of life, resembling the Son of God, he remains a priest forever.
+            4 Just think how great he was: Even the patriarch Abraham gave him a tenth of the plunder!
+            5 Now the law requires the descendants of Levi who become priests to collect a tenth from the people—that is, from their fellow Israelites—even though they also are descended from Abraham.
+            6 This man, however, did not trace his descent from Levi, yet he collected a tenth from Abraham and blessed him who had the promises.
+            7 And without doubt the lesser is blessed by the greater.
+            8 Here mortal men receive tithes, but there he receives them, of whom it is testified that he lives.`,
+
+                    ESV: `1 For this Melchizedek, king of Salem, priest of the Most High God, met Abraham returning from the slaughter of the kings and blessed him,
+            2 and to him Abraham apportioned a tenth part of everything. He is first, by translation of his name, king of righteousness, and then king of Salem, that is, king of peace.
+            3 He is without father or mother or genealogy, having neither beginning of days nor end of life, but resembling the Son of God he continues a priest forever.
+            4 See how great this man was to whom Abraham the patriarch gave a tenth of the spoils!
+            5 Now the law requires the descendants of Levi who become priests to collect a tenth from the people—that is, from their brothers—even though they also are descended from Abraham.
+            6 But this man, who does not have his descent from them, collected a tenth from Abraham and blessed him who had the promises.
+            7 It is beyond dispute that the inferior is blessed by the superior.
+            8 In the one case, the tenth is collected by people who die; but in the other case, by him who is declared to be living.`,
+
+                    AMP: `1 For this Melchizedek, king of Salem, priest of the Most High God, who met Abraham returning from the slaughter of the kings and blessed him,
+            2 to whom also Abraham gave a tenth part of all, first being translated “King of Righteousness,” and then also King of Salem, meaning “King of Peace,”
+            3 without father, without mother, without genealogy, having neither beginning of days nor end of life, but made like the Son of God, abides a priest continually.
+            4 Now consider how great this man was, to whom even the patriarch Abraham gave a tenth of the spoils!
+            5 And those who are of the sons of Levi who receive the priesthood have a commandment to receive tithes according to the law, that is, from their brothers, though they come from the loins of Abraham,
+            6 but the one whose genealogy is not traced from them received tithes from Abraham and blessed him who had the promises.
+            7 Beyond all contradiction, the lesser is blessed by the better.
+            8 Here mortal men receive tithes, but there He receives them, of whom it is testified that He lives.`,
+
+                    NLT: `1 This Melchizedek was king of Salem and a priest of God Most High. He met Abraham returning from the defeat of a group of kings and blessed him,
+            2 and Abraham gave him a tenth of everything he had recovered. (Now Melchizedek means “king of righteousness,” and Salem means “king of peace.”)
+            3 He was without father or mother or family tree, and he had no beginning or end of life—he was like the Son of God, and he remains a priest forever.
+            4 Think about how great Melchizedek was! Even the patriarch Abraham gave him a tenth of the plunder!
+            5 Now the law of Moses required the descendants of Levi who became priests to collect a tenth of the income from their fellow Israelites, who were also descended from Abraham.
+            6 But Melchizedek was not a descendant of Levi, yet Abraham gave him a tenth of the plunder and received a blessing from him.
+            7 It’s clear that the inferior is blessed by the superior.
+            8 In one case, mortal men collect the tenth, but in the other case, the one whom God declares to be alive receives the tenth.`,
+                },
+
+                "Hebrews 7:1-4": {
+                    KJV: `1 For this Melchisedec, king of Salem, priest of the most high God, who met Abraham returning from the slaughter of the kings, and blessed him;
+            2 To whom also Abraham gave a tenth part of all; first being by interpretation King of righteousness, and after that also King of Salem, which is, King of peace;
+            3 Without father, without mother, without descent, having neither beginning of days, nor end of life; but made like unto the Son of God; abideth a priest continually.
+            4 Now consider how great this man was, unto whom even the patriarch Abraham gave the tenth of the spoils.`,
+
+                    NKJV: `1 For this Melchizedek, king of Salem, priest of the Most High God, who met Abraham returning from the slaughter of the kings and blessed him,
+            2 to whom also Abraham gave a tenth part of all, first being translated “King of Righteousness,” and then also king of Salem, meaning “King of Peace,”
+            3 without father, without mother, without genealogy, having neither beginning of days nor end of life, but made like the Son of God, remains a priest continually.
+            4 Now consider how great this man was, to whom even the patriarch Abraham gave a tenth of the spoils.`,
+
+                    NIV: `1 This Melchizedek was king of Salem and priest of God Most High. He met Abraham returning from the defeat of the kings and blessed him,
+            2 and Abraham gave him a tenth of everything. First, the name Melchizedek means “king of righteousness”; then also, “king of Salem” means “king of peace.”
+            3 Without father or mother, without genealogy, without beginning of days or end of life, resembling the Son of God, he remains a priest forever.
+            4 Just think how great he was: Even the patriarch Abraham gave him a tenth of the plunder!`,
+
+                    ESV: `1 For this Melchizedek, king of Salem, priest of the Most High God, met Abraham returning from the slaughter of the kings and blessed him,
+            2 and to him Abraham apportioned a tenth part of everything. He is first, by translation of his name, king of righteousness, and then king of Salem, that is, king of peace.
+            3 He is without father or mother or genealogy, having neither beginning of days nor end of life, but resembling the Son of God he continues a priest forever.
+            4 See how great this man was to whom Abraham the patriarch gave a tenth of the spoils!`,
+
+                    AMP: `1 For this Melchizedek, king of Salem, priest of the Most High God, who met Abraham returning from the slaughter of the kings and blessed him,
+            2 to whom also Abraham gave a tenth part of all, first being translated “King of Righteousness,” and then also King of Salem, meaning “King of Peace,”
+            3 without father, without mother, without genealogy, having neither beginning of days nor end of life, but made like the Son of God, abides a priest continually.
+            4 Now consider how great this man was, to whom even the patriarch Abraham gave a tenth of the spoils!`,
+
+                    NLT: `1 This Melchizedek was king of Salem and a priest of God Most High. He met Abraham returning from the defeat of a group of kings and blessed him,
+            2 and Abraham gave him a tenth of everything he had recovered. (Now Melchizedek means “king of righteousness,” and Salem means “king of peace.”)
+            3 He was without father or mother or family tree, and he had no beginning or end of life—he was like the Son of God, and he remains a priest forever.
+            4 Think about how great Melchizedek was! Even the patriarch Abraham gave him a tenth of the plunder!`,
+                },
+
+                "Hebrews 7:5": {
+                    KJV: "And verily they that are of the sons of Levi, who receive the office of the priesthood, have a commandment to take tithes of the people according to the law, that is, of their brethren, though they come out of the loins of Abraham:",
+
+                    NKJV: "And indeed those who are of the sons of Levi, who receive the priesthood, have a commandment to receive tithes from the people according to the law, that is, from their brethren, though they have come from the loins of Abraham;",
+
+                    NIV: "Now the law requires the descendants of Levi who become priests to collect a tenth from the people—that is, from their fellow Israelites—even though they also are descended from Abraham.",
+
+                    ESV: "And those descendants of Levi who receive the priestly office have a commandment in the law to take tithes from the people, that is, from their brothers, though these also are descended from Abraham.",
+
+                    AMP: "And this person [Melchizedek] is not from the tribe of Levi, who receive the office of the priesthood and have a commandment according to the Law to collect tithes from the people—which means, from their fellow Israelites—even though they are descended from Abraham.",
+
+                    NLT: "Now the law of Moses required that the priests, who are descendants of Levi, must collect a tithe from the rest of the people of Israel, who are also descendants of Abraham.",
+                },
+
+                "Hebrews 7:6-8": {
+                    KJV: "But he whose descent is not counted from them received tithes of Abraham, and blessed him that had the promises. And without all contradiction the less is blessed of the better. And here men that die receive tithes; but there he receiveth them, of whom it is witnessed that he liveth.",
+
+                    NKJV: "But he whose genealogy is not derived from them received tithes from Abraham and blessed him who had the promises. Now beyond all contradiction the lesser is blessed by the better. Here mortal men receive tithes, but there he receives them, of whom it is witnessed that he lives.",
+
+                    NIV: "This man, however, did not trace his descent from Levi, yet he collected a tenth from Abraham and blessed him who had the promises. And without doubt the lesser is blessed by the greater. In the one case, the tenth is collected by people who die; but in the other case, by him who is declared to be living.",
+
+                    ESV: "But this man who does not have his descent from them received tithes from Abraham and blessed him who had the promises. It is beyond dispute that the inferior is blessed by the superior. In the one case tithes are received by mortal men, but in the other case, by one of whom it is testified that he lives.",
+
+                    AMP: "But this person, Melchizedek, who is not from their Levitical ancestry, received tithes from Abraham and blessed the one who had the promises [of God]. Yet it is beyond all dispute that the lesser person is always blessed by the greater one. Furthermore, here in the Levitical priesthood, tithes are received by men who are subject to death; but in that case concerning Melchizedek, they are received by one of whom it is testified that he lives on [perpetually].",
+
+                    NLT: "But Melchizedek, who was not a descendant of Levi, collected a tenth from Abraham. And Melchizedek placed a blessing upon Abraham, the one who had already received the promises of God. And without question, the person who has the power to give a blessing is greater than the one who is blessed. The priests who collect tithes are men who die, so Melchizedek is greater than they are, because we are told that he lives on.",
+                },
+
+                "Genesis 14:20": {
+                    KJV: "And blessed be the most high God, which hath delivered thine enemies into thy hand. And he gave him tithes of all.",
+                    NKJV: "And blessed be God Most High, Who has delivered your enemies into your hand.” And he gave him a tithe of all.",
+                    NIV: "and blessed be God Most High, who delivered your enemies into your hand.” Then Abram gave him a tenth of everything.",
+                    ESV: "and blessed be God Most High, who has delivered your enemies into your hand!” And Abram gave him a tenth of everything.",
+                    AMP: "And blessed be God Most High, Who has delivered your enemies into your hand.” And Abram gave him a tithe of all.",
+                    NLT: "And he blessed Abram, saying, “Praise be to God Most High, who delivered your enemies into your hand.” Then Abram gave him a tenth of everything.",
+                },
+
+                "Genesis 28:22": {
+                    KJV: "And this stone, which I have set for a pillar, shall be God's house: and of all that thou shalt give me I will surely give the tenth unto thee.",
+                    NKJV: "This stone which I have set as a pillar shall be God’s house, and of all that You give me I will give a tenth to You.",
+                    NIV: "This stone that I have set as a pillar will be God’s house, and of all that you give me I will give you a tenth.",
+                    ESV: "and this stone, which I have set up as a pillar, shall be God’s house. And of all that you give me I will give a full tenth to you.",
+                    AMP: "And this stone, which I have set for a pillar, shall be God’s house; and of all that You give me I will surely give a tenth to You.",
+                    NLT: "This stone will be God’s house, and I will give you a tenth of all I receive.",
+                },
+
+                "Hebrews 7:9-10": {
+                    KJV: `9 And as I may so say, Levi also, who receiveth tithes, paid tithes in Abraham.  
+10 For he was yet in the loins of his father, when Melchisedec met him.`,
+
+                    NKJV: `9 Even Levi, who receives tithes, paid tithes through Abraham, so to speak,  
+10 for he was still in the loins of his father when Melchizedek met him.`,
+
+                    NIV: `9 One might even say that Levi, who collects the tenth, paid the tenth through Abraham,  
+10 because when Melchizedek met Abraham, Levi was still in the body of his ancestor.`,
+
+                    ESV: `9 One might even say that Levi himself, who receives tithes, paid tithes through Abraham,  
+10 for he was still in the loins of his ancestor when Melchizedek met him.`,
+
+                    AMP: `9 A person might even say that Levi [the father of the priestly tribe], who receives tithes (the tenth), paid tithes through Abraham,  
+10 for Levi was still in the loins (unborn) of his forefather Abraham when Melchizedek met him [Abraham].`,
+
+                    NLT: `9 In addition, we might even say that these Levites—the ones who collect the tithe—paid a tithe to Melchizedek when their ancestor Abraham paid a tithe to him.  
+10 For although Levi wasn’t born yet, the seed from which he came was in Abraham’s body when Melchizedek collected the tithe from him.`,
+                },
+
+                "Hebrews 7:6-8": {
+                    KJV: `6 But he whose descent is not counted from them received tithes of Abraham, and blessed him that had the promises.  
+7 And without all contradiction the less is blessed of the better.  
+8 And here men that die receive tithes; but there he receiveth them, of whom it is witnessed that he liveth.`,
+
+                    NKJV: `6 But he whose genealogy is not derived from them received tithes from Abraham and blessed him who had the promises.  
+7 Now beyond all contradiction the lesser is blessed by the better.  
+8 Here mortal men receive tithes, but there he receives them, of whom it is witnessed that he lives.`,
+
+                    NIV: `6 This man, however, did not trace his descent from Levi, yet he collected a tenth from Abraham and blessed him who had the promises.  
+7 And without doubt the lesser is blessed by the greater.  
+8 In the one case, the tenth is collected by people who die; but in the other case, by him who is declared to be living.`,
+
+                    ESV: `6 But this man who does not have his descent from them received tithes from Abraham and blessed him who had the promises.  
+7 It is beyond dispute that the inferior is blessed by the superior.  
+8 In the one case tithes are received by mortal men, but in the other case, by one of whom it is testified that he lives.`,
+
+                    AMP: `6 But this person, Melchizedek, who was not from their Levitical ancestry, received tithes from Abraham and blessed him who possessed the promises [of God].  
+7 Yet it is beyond all dispute that the lesser person is always blessed by the greater one.  
+8 Furthermore, here [in the Levitical priesthood] tithes are received by men who are subject to death; but in that case [concerning Melchizedek], they are received by one of whom it is testified that he lives on [perpetually].`,
+
+                    NLT: `6 But Melchizedek, who was not a descendant of Levi, collected a tenth from Abraham. And Melchizedek placed a blessing upon Abraham, the one who had already received the promises of God.  
+7 And without question, the person who has the power to give a blessing is greater than the one who is blessed.  
+8 The priests who collect tithes are men who die, so Melchizedek is greater than they are, because we are told that he lives on.`,
+                },
+
+                "Luke 18:9-12": {
+                    KJV: `9 And he spake this parable unto certain which trusted in themselves that they were righteous, and despised others:  
+10 Two men went up into the temple to pray; the one a Pharisee, and the other a publican.  
+11 The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are, extortioners, unjust, adulterers, or even as this publican.  
+12 I fast twice in the week, I give tithes of all that I possess.`,
+
+                    NKJV: `9 Also He spoke this parable to some who trusted in themselves that they were righteous, and despised others:  
+10 “Two men went up to the temple to pray, one a Pharisee and the other a tax collector.  
+11 The Pharisee stood and prayed thus with himself, ‘God, I thank You that I am not like other men—extortioners, unjust, adulterers, or even as this tax collector.  
+12 I fast twice a week; I give tithes of all that I possess.’”`,
+
+                    NIV: `9 To some who were confident of their own righteousness and looked down on everyone else, Jesus told this parable:  
+10 “Two men went up to the temple to pray, one a Pharisee and the other a tax collector.  
+11 The Pharisee stood by himself and prayed: ‘God, I thank you that I am not like other people—robbers, evildoers, adulterers—or even like this tax collector.  
+12 I fast twice a week and give a tenth of all I get.’”`,
+
+                    ESV: `9 He also told this parable to some who trusted in themselves that they were righteous, and treated others with contempt:  
+10 “Two men went up into the temple to pray, one a Pharisee and the other a tax collector.  
+11 The Pharisee, standing by himself, prayed thus: ‘God, I thank you that I am not like other men, extortioners, unjust, adulterers, or even like this tax collector.  
+12 I fast twice a week; I give tithes of all that I get.’”`,
+
+                    AMP: `9 He also told this parable to some people who trusted in themselves and were confident that they were righteous (posing outwardly as upright and in right standing with God), and who viewed others with contempt:  
+10 “Two men went up into the temple [enclosure] to pray, one a Pharisee and the other a tax collector.  
+11 The Pharisee stood [ostentatiously] and began praying to himself [in a self-righteous way], saying: ‘God, I thank You that I am not like the rest of men—swindlers, unjust (dishonest), adulterers—or even like this tax collector.  
+12 I fast twice a week; I pay tithes of all that I get.’”`,
+
+                    NLT: `9 Then Jesus told this story to some who had great confidence in their own righteousness and scorned everyone else:  
+10 “Two men went to the Temple to pray. One was a Pharisee, and the other was a despised tax collector.  
+11 The Pharisee stood by himself and prayed this prayer: ‘I thank you, God, that I am not like other people—cheaters, sinners, adulterers. I’m certainly not like that tax collector!  
+12 I fast twice a week, and I give you a tenth of my income.’”`,
+                },
+
+                "Matthew 23:23": {
+                    KJV: "Woe unto you, scribes and Pharisees, hypocrites! for ye pay tithe of mint and anise and cummin, and have omitted the weightier matters of the law, judgment, mercy, and faith: these ought ye to have done, and not to leave the other undone.",
+
+                    NKJV: "Woe to you, scribes and Pharisees, hypocrites! For you pay tithe of mint and anise and cummin, and have neglected the weightier matters of the law: justice and mercy and faith. These you ought to have done, without leaving the others undone.",
+
+                    NIV: "Woe to you, teachers of the law and Pharisees, you hypocrites! You give a tenth of your spices—mint, dill and cumin. But you have neglected the more important matters of the law—justice, mercy and faithfulness. You should have practiced the latter, without neglecting the former.",
+
+                    ESV: "Woe to you, scribes and Pharisees, hypocrites! For you tithe mint and dill and cumin, and have neglected the weightier matters of the law: justice and mercy and faithfulness. These you ought to have done, without neglecting the others.",
+
+                    AMP: "Woe to you, [self-righteous] scribes and Pharisees, hypocrites! For you give a tenth (tithe) of your mint and dill and cumin [focusing on minor matters], and have neglected the weightier [more important moral and spiritual] provisions of the Law: justice and mercy and faithfulness; but these are the [primary] things you ought to have done without neglecting the others.",
+
+                    NLT: "What sorrow awaits you teachers of religious law and you Pharisees. Hypocrites! For you are careful to tithe even the tiniest income from your herb gardens, but you ignore the more important aspects of the law—justice, mercy, and faith. You should tithe, yes, but do not neglect the more important things.",
+                },
+
+                "Leviticus 27:30": {
+                    KJV: "And all the tithe of the land, whether of the seed of the land, or of the fruit of the tree, is the LORD's: it is holy unto the LORD.",
+                    NKJV: "‘And all the tithe of the land, whether of the seed of the land or of the fruit of the tree, is the LORD’s. It is holy to the LORD.",
+                    NIV: "A tithe of everything from the land, whether grain from the soil or fruit from the trees, belongs to the LORD; it is holy to the LORD.",
+                    ESV: "Every tithe of the land, whether of the seed of the land or of the fruit of the trees, is the LORD’s; it is holy to the LORD.",
+                    AMP: "Every tithe of the land, whether of the seed of the land or of the fruit of the trees, is the LORD’s; it is holy to the LORD.",
+                    NLT: "Every tenth animal or plant that belongs to you is holy and belongs to the LORD.",
+                },
+
+                "Malachi 3:10": {
+                    KJV: "Bring ye all the tithes into the storehouse, that there may be meat in mine house, and prove me now herewith, saith the LORD of hosts, if I will not open you the windows of heaven, and pour you out a blessing, that there shall not be room enough to receive it.",
+                    NKJV: "Bring all the tithes into the storehouse, That there may be food in My house, And try Me now in this,” Says the LORD of hosts, “If I will not open for you the windows of heaven And pour out for you such blessing That there will not be room enough to receive it.",
+                    NIV: "Bring the whole tithe into the storehouse, that there may be food in my house. Test me in this,” says the LORD Almighty, “and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it.",
+                    ESV: "Bring the full tithe into the storehouse, that there may be food in my house. And thereby put me to the test, says the LORD of hosts, if I will not open the windows of heaven for you and pour down for you a blessing until there is no more need.",
+                    AMP: "Bring all the tithes into the storehouse, so there will be enough food in My Temple, and put Me to the test, says the LORD of hosts. If I do not open the windows of heaven for you and pour out for you an overflowing blessing.",
+                    NLT: "Bring all the tithes into the storehouse so there will be enough food in my Temple. If you do,” says the LORD of Heaven’s Armies, “I will open the windows of heaven for you. I will pour out a blessing so great you won’t have enough room to take it in! Try it! Put me to the test!",
+                },
+            };
+
+            // Replace the existing showVersion function
+
+            function showVersion(version) {
+                const reference =
+                    document.getElementById("verse-reference").textContent;
+                const verseText = document.getElementById("verse-text");
+
+                // Show loader
+                verseText.innerHTML =
+                    '<div class="verse-loader"><i class="fas fa-spinner fa-2x"></i></div>';
+
+                // Simulate loading time and show verse
+                setTimeout(() => {
+                    if (bibleVerses[reference]) {
+                        verseText.innerHTML = `<p class="verse-text">${bibleVerses[reference][version]}</p>`;
+                        // Add show class after a brief delay to trigger fade-in
+                        setTimeout(() => {
+                            document
+                                .querySelector(".verse-text")
+                                .classList.add("show");
+                        }, 50);
+                    } else {
+                        verseText.innerHTML =
+                            "<p>Verse not found in database.</p>";
+                    }
+
+                    // Update active button
+                    document.querySelectorAll(".version-btn").forEach((btn) => {
+                        btn.classList.remove("active");
+                        if (btn.textContent === version)
+                            btn.classList.add("active");
+                    });
+                }, 500); // Half second loading time
+            }
+
+            // Close modal when clicking the X or outside
+            document.querySelector(".close").onclick = function () {
+                document.getElementById("verse-modal").style.display = "none";
+                document.body.classList.remove("modal-open");
+            };
+
+            window.onclick = function (event) {
+                const modal = document.getElementById("verse-modal");
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    document.body.classList.remove("modal-open");
+                }
+            };
+
+            // function checkQuiz() {
+            //     const answers = {
+            //         q1: "b",
+            //         q2: "b",
+            //         q3: "c",
+            //     };
+
+            //     let score = 0;
+            //     let total = Object.keys(answers).length;
+
+            //     for (let question in answers) {
+            //         const selected = document.querySelector(
+            //             `input[name="${question}"]:checked`
+            //         );
+            //         if (selected && selected.value === answers[question])
+            //             score++;
+            //     }
+
+            //     const results = document.getElementById("quiz-results");
+            //     results.innerHTML = `
+            //                                         <h3>Quiz Results</h3>
+            //                                         <p>You scored ${score} out of ${total}</p>
+            //                                         ${
+            //                                             score === total
+            //                                                 ? "<p>Excellent! Perfect score!</p>"
+            //                                                 : "<p>Keep studying and try again!</p>"
+            //                                         }
+            //                                     `;
+            // }
+
+            // Add to your existing <script> section
+            // Track progress
+
+            // function checkQuiz() {
+            //     const answers = {
+            //         q1: "a", //
+            //         q2: "b", // It should be one-tenth and complete
+            //         q3: "b", // A place for God's tithe, not for personal or random use
+            //         q4: "c", // His servants may abandon the work
+            //         q5: "a", // God will open the windows of heaven and pour blessings
+            //         q6: "a", // It helps sustain the instruments God uses for His work
+            //     };
+
+            //     let score = 0;
+            //     let total = Object.keys(answers).length;
+            //     let resultsHTML = "<h3>Results:</h3><ul>";
+
+            //     for (let key in answers) {
+            //         const selected = document.querySelector(
+            //             `input[name="${key}"]:checked`
+            //         );
+            //         if (selected) {
+            //             if (selected.value === answers[key]) {
+            //                 score++;
+            //                 resultsHTML += `<li>Question ${key.slice(
+            //                     1
+            //                 )}: Correct ✅</li>`;
+            //             } else {
+            //                 resultsHTML += `<li>Question ${key.slice(
+            //                     1
+            //                 )}: Incorrect ❌</li>`;
+            //             }
+            //         } else {
+            //             resultsHTML += `<li>Question ${key.slice(
+            //                 1
+            //             )}: Not answered ⚠️</li>`;
+            //         }
+            //     }
+
+            //     resultsHTML += `</ul><p>You scored <strong>${score} out of ${total}</strong>.</p>`;
+
+            //     const resultsDiv = document.getElementById("quiz-results");
+            //     resultsDiv.innerHTML = resultsHTML;
+            //     resultsDiv.scrollIntoView({ behavior: "smooth" });
+            // }
+
+            function checkQuiz() {
+                const answers = {
+                    q1: "a", // Malachi 3:10
+                    q2: "b", // Time of Melchizedek and Abraham
+                    q3: "b", // No, it predates the Law of Moses
+                    q4: "c", // Christ
+                    q5: "a", // Hebrews 7:6-8
+                    q6: "a", // To support Melchizedek's priesthood
+                };
+
+                let score = 0;
+                let total = Object.keys(answers).length;
+                let resultsHTML = "<h3>📊 Quiz Results</h3><ul>";
+
+                for (let key in answers) {
+                    const selected = document.querySelector(
+                        `input[name="${key}"]:checked`
+                    );
+                    if (selected) {
+                        if (selected.value === answers[key]) {
+                            score++;
+                            resultsHTML += `<li>Question ${key.slice(
+                                1
+                            )}: ✅ Correct</li>`;
+                        } else {
+                            resultsHTML += `<li>Question ${key.slice(
+                                1
+                            )}: ❌ Incorrect</li>`;
+                        }
+                    } else {
+                        resultsHTML += `<li>Question ${key.slice(
+                            1
+                        )}: ⚠️ Not answered</li>`;
+                    }
+                }
+
+                resultsHTML += `</ul>`;
+
+                // Calculate percentage and add appropriate styling
+                const percentage = Math.round((score / total) * 100);
+                let scoreClass = "";
+                let message = "";
+
+                if (percentage >= 80) {
+                    scoreClass = "score-excellent";
+                    message =
+                        "🎉 Excellent work! You have a strong understanding of biblical tithing.";
+                } else if (percentage >= 60) {
+                    scoreClass = "score-good";
+                    message =
+                        "👍 Good job! You have a solid foundation, but consider reviewing some concepts.";
+                } else {
+                    scoreClass = "score-needs-improvement";
+                    message =
+                        "📚 Keep studying! Review the lesson materials to strengthen your understanding.";
+                }
+
+                resultsHTML += `<div class="score-summary ${scoreClass}">
+                <strong>Your Score: ${score} out of ${total} (${percentage}%)</strong>
+                <br><br>${message}
+            </div>`;
+
+                const resultsDiv = document.getElementById("quiz-results");
+                resultsDiv.innerHTML = resultsHTML;
+                resultsDiv.classList.add("show");
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }
+
+            let progress = 0;
+            const totalSections = 5; // Number of tabs
+
+            function updateProgress(increment = true) {
+                if (increment) {
+                    progress = Math.min(100, progress + 100 / totalSections);
+                }
+                const progressBar = document.querySelector(".progress");
+                const progressText = document.querySelector(".progress-text");
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}% Complete`;
+
+                if (progress >= 100) {
+                    showToast(
+                        "Congratulations! You've completed the lesson! 🎉"
+                    );
+                }
+            }
+
+            function showToast(message) {
+                const toast = document.createElement("div");
+                toast.className = "toast";
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                // Trigger reflow
+                toast.offsetHeight;
+
+                // Show toast
+                toast.style.opacity = "1";
+
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    toast.style.opacity = "0";
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            // Add interaction tracking to tab switching
+            const originalOpenTab = openTab;
+            openTab = function (tabName) {
+                originalOpenTab(tabName);
+                updateProgress();
+
+                // Add animation to questions
+                if (tabName === "quiz") {
+                    document.querySelectorAll(".question").forEach((q, i) => {
+                        setTimeout(() => q.classList.add("show"), i * 200);
+                    });
+                }
+            };
+
+            // Save progress to localStorage
+            function saveProgress() {
+                localStorage.setItem("lessonProgress", progress);
+                showToast("Progress saved! 💾");
+            }
+
+            // Load saved progress
+            window.addEventListener("load", () => {
+                const savedProgress = localStorage.getItem("lessonProgress");
+                if (savedProgress) {
+                    progress = parseFloat(savedProgress);
+                    updateProgress(false);
+                }
+            });
+
+            // Share functionality
+            function shareLesson() {
+                if (navigator.share) {
+                    navigator
+                        .share({
+                            title: "Sunday School Lesson",
+                            text: "Check out this lesson on Real Christian Clothing!",
+                            url: window.location.href,
+                        })
+                        .then(() => showToast("Shared successfully! 🙌"))
+                        .catch(() => showToast("Sharing failed"));
+                } else {
+                    showToast("Sharing not supported on this device");
+                }
+            }
+
+            // Scroll to top
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+            }
+
+            // Add to your existing JavaScript
+
+            let preferredVersion =
+                localStorage.getItem("preferredVersion") || "KJV";
+
+            function changeDefaultVersion(version) {
+                preferredVersion = version;
+                localStorage.setItem("preferredVersion", version);
+                showVersion(version);
+                showToast(`Default Bible version changed to ${version}`);
+            }
+
+            // Update the showBibleVersions function
+
+            // Load preferred version on startup
+            window.addEventListener("load", () => {
+                const savedVersion = localStorage.getItem("preferredVersion");
+                if (savedVersion) {
+                    preferredVersion = savedVersion;
+                    document.querySelectorAll(".version-btn").forEach((btn) => {
+                        btn.classList.remove("active");
+                        if (btn.textContent === preferredVersion)
+                            btn.classList.add("active");
+                    });
+                }
+            });
+
+            // Add this to your existing <script> section
+            let currentFontSize =
+                parseInt(localStorage.getItem("preferredFontSize")) || 16;
+
+            function adjustFontSize(delta) {
+                // Adjust font size with limits
+                currentFontSize = Math.min(
+                    Math.max(currentFontSize + delta, 12),
+                    24
+                );
+
+                // Update CSS variable
+                document.documentElement.style.setProperty(
+                    "--font-size",
+                    `${currentFontSize}px`
+                );
+
+                // Update display
+                document.querySelector(
+                    ".font-size"
+                ).textContent = `${currentFontSize}px`;
+
+                // Save to localStorage
+                localStorage.setItem("preferredFontSize", currentFontSize);
+            }
+
+            // Initialize font size on page load
+            window.addEventListener("load", () => {
+                // Set initial font size
+                document.documentElement.style.setProperty(
+                    "--font-size",
+                    `${currentFontSize}px`
+                );
+                document.querySelector(
+                    ".font-size"
+                ).textContent = `${currentFontSize}px`;
+
+                // Add scalable-text class to all text elements
+                document
+                    .querySelectorAll(
+                        "p, h1, h2, h3, h4, h5, h6, li, blockquote, label, button, input, textarea, .tab-btn, .verse-text, .options label"
+                    )
+                    .forEach((el) => el.classList.add("scalable-text"));
+            });
+
+            function changeFont(fontFamily) {
+                document.body.style.fontFamily = fontFamily;
+                // Save preference
+                localStorage.setItem("preferredFont", fontFamily);
+            }
+
+            // Load saved preferences
+            window.addEventListener("load", () => {
+                const savedFontSize = localStorage.getItem("preferredFontSize");
+                if (savedFontSize) {
+                    currentFontSize = parseInt(savedFontSize);
+                    adjustFontSize(0);
+                }
+
+                const savedFont = localStorage.getItem("preferredFont");
+                if (savedFont) {
+                    document.body.style.fontFamily = savedFont;
+                    document.querySelector(".font-family-select").value =
+                        savedFont;
+                }
+            });
+
+            // Add CSS Variable for scaling
+            document.documentElement.style.setProperty(
+                "--content-scale",
+                "100%"
+            );
+
+            // Update content elements to use the scale
+            document
+                .querySelectorAll(
+                    ".tab-content, .memory-verse, .reflection-notes"
+                )
+                .forEach((el) => {
+                    el.classList.add("adjustable-content");
+                    el.style.fontSize =
+                        "calc(1rem * var(--content-scale) / 100)";
+                });
+
+            // Add to your existing <script> section
+            document.addEventListener("DOMContentLoaded", () => {
+                // Love Meter functionality
+                const loveSlider = document.querySelector(".love-slider");
+                const ratingValue = document.querySelector(".rating-value");
+                const ratingFeedback =
+                    document.querySelector(".rating-feedback");
+
+                if (loveSlider) {
+                    loveSlider.addEventListener("input", () => {
+                        const value = loveSlider.value;
+                        ratingValue.textContent = `${value}/10`;
+
+                        // Update feedback based on rating
+                        const feedback =
+                            value >= 8
+                                ? "Excellent! Keep showing God's love!"
+                                : value >= 6
+                                ? "Good effort! There's room to grow."
+                                : "Consider ways to show more love tomorrow.";
+                        ratingFeedback.textContent = feedback;
+                    });
+                }
+
+                // Action Items functionality
+                const addActionBtn = document.querySelector(".add-action-btn");
+                if (addActionBtn) {
+                    addActionBtn.addEventListener("click", () => {
+                        const action = prompt("Enter your custom love action:");
+                        if (action) {
+                            const actionItems =
+                                document.querySelector(".action-items");
+                            const newAction = document.createElement("div");
+                            newAction.className = "action-item";
+                            newAction.innerHTML = `
+                                                                    <input type="checkbox" id="action${Date.now()}">
+                                                                    <label for="action${Date.now()}">${action}</label>
+                                                                `;
+                            actionItems.insertBefore(newAction, addActionBtn);
+                        }
+                    });
+                }
+
+                // Journal Prompts functionality
+                const prompts = [
+                    "How did you demonstrate God's love today?",
+                    "What challenges did you face in showing love?",
+                    "How can you better express God's love tomorrow?",
+                ];
+                let currentPrompt = 0;
+
+                const updatePrompt = () => {
+                    const promptElement = document.querySelector(".prompt p");
+                    const promptCounter =
+                        document.querySelector(".prompt-counter");
+                    if (promptElement) {
+                        promptElement.textContent = prompts[currentPrompt];
+                        promptCounter.textContent = `${currentPrompt + 1}/${
+                            prompts.length
+                        }`;
+                    }
+                };
+
+                const nextPromptBtn = document.querySelector(".next-prompt");
+                const prevPromptBtn = document.querySelector(".prev-prompt");
+
+                if (nextPromptBtn && prevPromptBtn) {
+                    nextPromptBtn.addEventListener("click", () => {
+                        if (currentPrompt < prompts.length - 1) {
+                            currentPrompt++;
+                            updatePrompt();
+                            prevPromptBtn.disabled = false;
+                            if (currentPrompt === prompts.length - 1) {
+                                nextPromptBtn.disabled = true;
+                            }
+                        }
+                    });
+
+                    prevPromptBtn.addEventListener("click", () => {
+                        if (currentPrompt > 0) {
+                            currentPrompt--;
+                            updatePrompt();
+                            nextPromptBtn.disabled = false;
+                            if (currentPrompt === 0) {
+                                prevPromptBtn.disabled = true;
+                            }
+                        }
+                    });
+                }
+
+                // Commitment functionality
+                const saveCommitmentBtn =
+                    document.querySelector(".save-commitment");
+                const commitmentInput =
+                    document.querySelector(".commitment-input");
+                const commitmentList =
+                    document.querySelector(".commitment-list");
+
+                if (saveCommitmentBtn && commitmentInput && commitmentList) {
+                    // Load saved commitments
+                    const savedCommitments = JSON.parse(
+                        localStorage.getItem("commitments") || "[]"
+                    );
+                    savedCommitments.forEach((commitment) => {
+                        const li = document.createElement("li");
+                        li.textContent = commitment;
+                        commitmentList.appendChild(li);
+                    });
+
+                    saveCommitmentBtn.addEventListener("click", () => {
+                        const commitment = commitmentInput.value.trim();
+                        if (commitment) {
+                            const li = document.createElement("li");
+                            li.textContent = commitment;
+                            commitmentList.appendChild(li);
+
+                            // Save to localStorage
+                            const commitments = JSON.parse(
+                                localStorage.getItem("commitments") || "[]"
+                            );
+                            commitments.push(commitment);
+                            localStorage.setItem(
+                                "commitments",
+                                JSON.stringify(commitments)
+                            );
+
+                            commitmentInput.value = "";
+                            showToast("Commitment saved! 🙏");
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
